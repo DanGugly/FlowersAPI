@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         binding.flowerRecycler.apply {
             adapter = flowerAdapter
-            layoutManager = GridLayoutManager(baseContext, 3)
+            layoutManager = GridLayoutManager(baseContext, 1)
         }
     }
 

@@ -21,6 +21,6 @@ class RestApi {
     }
     companion object{
         //Best practise to have baseurl(endpoint) provided in static variable
-        private const val BASE_URL = "http://services.hanselandpetal.com/"
+        const val BASE_URL = "http://services.hanselandpetal.com/"
     }
 }
