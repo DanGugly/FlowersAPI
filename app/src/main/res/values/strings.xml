@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">FlowersApp</string>
+    <string name="no_available_name">No Available Name</string>
+    <string name="no_available_category">No Available Category</string>
+    <string name="no_available_price">No Available Price</string>
+    <string name="no_available_photo">No Available Photo</string>
+    <string name="no_available_instructions">No Available Instructions</string>
+    <string name="no_available_id">No Available Id</string>
 </resources>

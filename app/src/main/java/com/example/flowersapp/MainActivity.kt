@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.flowersapp.adapter.FlowerAdapter
+import com.example.flowersapp.databinding.ActivityMainBinding
 import com.example.flowersapp.model.Flowers
 import com.example.flowersapp.rest.RestApi
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,6 +16,9 @@ import io.reactivex.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
+    private lateinit var flowerAdapter: FlowerAdapter
     //Get network manager from the system service
     private val networkManager by lazy{
         getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -20,7 +26,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        flowerAdapter = FlowerAdapter()
 
         //Assign active network
         val activeNetwork = networkManager.activeNetworkInfo
@@ -38,7 +48,11 @@ class MainActivity : AppCompatActivity() {
                     //.subscribe(this::handleSuccess, this::handleError)
                     .subscribe(
                         //Success with flowers object
-                        { flowers -> handleSuccess(flowers) },
+                        {
+                                flowers -> handleSuccess(flowers)
+                                //Load flowers into adapter for recycler view
+                                flowerAdapter.importFlowers(flowers)
+                        },
                         //Error with throwable object
                         { error -> handleError(error) }
                     )
@@ -46,6 +60,14 @@ class MainActivity : AppCompatActivity() {
                 //Display error in a toast
                 Toast.makeText(baseContext, "Connectivity issues", Toast.LENGTH_LONG).show()
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.flowerRecycler.apply {
+            adapter = flowerAdapter
+            layoutManager = GridLayoutManager(baseContext, 3)
         }
     }
 
