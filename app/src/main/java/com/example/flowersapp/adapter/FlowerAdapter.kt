@@ -49,8 +49,8 @@ class FlowerAdapter(
         Picasso
             .get()
             .load(IMAGE_URL+path)
-            .resize(50,50)
-            .centerCrop()
+            .resize(350,350)
+            //.centerCrop()
             .into(flower)
     }
 
